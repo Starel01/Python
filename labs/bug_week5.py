@@ -55,7 +55,7 @@ for name, grade in grade_book.items():
 # ============================================================
 print("\n--- Honor Roll (grade >= 93) ---")
 for name, grade in grade_book.items():
-    if grade > 93:
+    if grade > 90:
         print(f"  {name.title()} made the honor roll!")
 
 
