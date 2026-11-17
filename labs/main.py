@@ -13,32 +13,21 @@ import hal_pc as hw
 from morse_code import WORD_GAP_MS, DOT_MS, DASH_MS, SYMBOL_GAP_MS, LETTER_GAP_MS, encode_message
 
 
-def blink_pattern(pattern):
-    # pattern is one letter, like '...'
-    for symbol in pattern:
-        if symbol == '.':
-            on_ms = DOT_MS
-        elif symbol == '-':
-            on_ms = DASH_MS
+
+
+def blink_word(message):
+    for pattern in encode_message(message):      
+        if pattern == ' ':
+            hw.set_led_timed(False, WORD_GAP_MS)
         else:
-            continue                                 # ignore anything else
-        hw.set_led_timed(True, on_ms)                # dot or dash
-        hw.set_led_timed(False, SYMBOL_GAP_MS)       # gap after a symbol
-
-
-def blink_word(text):
-    encoded = encode_message(text)
-   for symbol in pattern:
-           if symbol == '.':
-               on_ms = DOT_MS
-           elif symbol == '-':
-               on_ms = DASH_MS
-           else:
-               continue                                 # ignore anything else
-           hw.set_led_timed(True, on_ms)                # dot or dash
-           hw.set_led_timed(False, SYMBOL_GAP_MS)       # gap after a symbol
-   
-  
+            for symbol in pattern:
+                if symbol == '.':
+                    hw.set_led_timed(True, DOT_MS)
+                elif symbol == '-':
+                    hw.set_led_timed(True, DASH_MS)
+                hw.set_led_timed(False, SYMBOL_GAP_MS)
+            hw.set_led_timed(False, LETTER_GAP_MS)
+    print("...done")
 
 print("Board:", hw.board_info())
 print("Type a message and watch it blink. Type 'quit' to stop.")
